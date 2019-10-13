@@ -1,0 +1,148 @@
+Number of houses: 10
+
+Houses with the zip code 78712.
+Address,
+Street: 2317 Speedway
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 10000
+Number of Bedrooms: 10
+Number of Bathrooms: 15
+Maximum cars in the Garage: 2
+Price of the house: 2500000.0
+
+Address,
+Street: 204 E Dean Keeton St
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 7000
+Number of Bedrooms: 8
+Number of Bathrooms: 5
+Maximum cars in the Garage: 3
+Price of the house: 2000000.0
+
+Address,
+Street: 2308 Whitis Ave
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 3200
+Number of Bedrooms: 9
+Number of Bathrooms: 4
+Maximum cars in the Garage: 2
+Price of the house: 300000.0
+
+Address,
+Street: 2100 San Jacinto Blvd
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 9000
+Number of Bedrooms: 6
+Number of Bathrooms: 4
+Maximum cars in the Garage: 4
+Price of the house: 4000000.0
+
+Address,
+Street: 2515 Speedway
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 4300
+Number of Bedrooms: 7
+Number of Bathrooms: 3
+Maximum cars in the Garage: 3
+Price of the house: 440000.0
+
+Address,
+Street: 301 E Dean Keeton St
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 8600
+Number of Bedrooms: 9
+Number of Bathrooms: 4
+Maximum cars in the Garage: 2
+Price of the house: 175000.0
+
+Houses within the price range of 100000$ to 200000$.
+Address,
+Street: 2907 Lake Austin Blvd
+Town: Austin
+State: TX
+Zip: 78703
+Area (square feet): 3500
+Number of Bedrooms: 3
+Number of Bathrooms: 2
+Maximum cars in the Garage: 1
+Price of the house: 180000.0
+
+Address,
+Street: 301 E Dean Keeton St
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 8600
+Number of Bedrooms: 9
+Number of Bathrooms: 4
+Maximum cars in the Garage: 2
+Price of the house: 175000.0
+
+Houses within the square foot range of 3000 to 4000.
+Address,
+Street: 2907 Lake Austin Blvd
+Town: Austin
+State: TX
+Zip: 78703
+Area (square feet): 3500
+Number of Bedrooms: 3
+Number of Bathrooms: 2
+Maximum cars in the Garage: 1
+Price of the house: 180000.0
+
+Address,
+Street: 2308 Whitis Ave
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 3200
+Number of Bedrooms: 9
+Number of Bathrooms: 4
+Maximum cars in the Garage: 2
+Price of the house: 300000.0
+
+Address,
+Street: 2400 Nueces Street
+Town: Austin
+State: TX
+Zip: 78705
+Area (square feet): 3500
+Number of Bedrooms: 6
+Number of Bathrooms: 4
+Maximum cars in the Garage: 3
+Price of the house: 560000.0
+
+Houses with 6 bedrooms.
+Address,
+Street: 2100 San Jacinto Blvd
+Town: Austin
+State: TX
+Zip: 78712
+Area (square feet): 9000
+Number of Bedrooms: 6
+Number of Bathrooms: 4
+Maximum cars in the Garage: 4
+Price of the house: 4000000.0
+
+Address,
+Street: 2400 Nueces Street
+Town: Austin
+State: TX
+Zip: 78705
+Area (square feet): 3500
+Number of Bedrooms: 6
+Number of Bathrooms: 4
+Maximum cars in the Garage: 3
+Price of the house: 560000.0
