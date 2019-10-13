@@ -1,0 +1,99 @@
+2317 Speedway
+Austin
+TX
+78712
+10000
+10
+15
+2
+2500000.00
+
+204 E Dean Keeton St
+Austin
+TX
+78712
+7000
+8
+5
+3
+2000000.00
+
+10000 Burnet Rd
+Austin
+TX
+78758
+10000
+12
+10
+5
+5000000.00
+
+2907 Lake Austin Blvd
+Austin
+TX
+78703
+3500
+3
+2
+1
+180000.00
+
+2308 Whitis Ave
+Austin
+TX
+78712
+3200
+9
+4
+2
+300000.00
+
+2100 San Jacinto Blvd
+Austin
+TX
+78712
+9000
+6
+4
+4
+4000000.00
+
+101 E 21st St
+Austin
+TX
+78705
+5000
+7
+5
+3
+3700000.00
+
+2400 Nueces Street
+Austin
+TX
+78705
+3500
+6
+4
+3
+560000.00
+
+2515 Speedway
+Austin
+TX 
+78712
+4300
+7
+3
+3
+440000.00
+
+301 E Dean Keeton St
+Austin
+TX
+78712
+8600
+9
+4
+2
+175000.00
