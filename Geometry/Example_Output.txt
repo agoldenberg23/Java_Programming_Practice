@@ -1,0 +1,29 @@
+Distance between pointP and pointQ: 4.123105625617661
+
+Circumference of circleA: 6.283185307179586
+
+Area of circleB: 28.274333882308138
+
+pointP is not inside circleA
+
+circleB is not inside circleA
+
+circleA and circleB does intersect
+
+Coordinates of rectangle that inscribes circleB: UL: (2.0, 9.0), LR: (8.0, 3.0)
+
+Length and width of rectG: 7.0, 2.0
+
+rectG and rectH do not have the same area but different perimeter
+
+rectH is a square
+
+Coordinates of circle that circumscribes rectH: Radius: 2.8284271247461903, Center: (4.0, 3.0)
+
+pointP is not inside rectG
+
+circleB is not inside rectH
+
+rectH is not inside rectG
+
+rectG and rectH do intersect
