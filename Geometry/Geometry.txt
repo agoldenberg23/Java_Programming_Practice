@@ -1,0 +1,568 @@
+import java.util.*;
+import java.io.*;
+
+class Point
+{
+  // list of attributes - x and y coordinates
+  private double x;
+  private double y;
+
+  // default constructor
+  public Point ()
+  {
+    this.x = 0;
+    this.y = 0;
+  }
+
+  // non-default constructor
+  public Point (double x, double y)
+  {
+	this.x = x;
+	this.y = y;
+  }
+
+  // accessors get the x and y coordinates
+  public double getX ()
+  {
+	return this.x;
+  }
+
+  public double getY ()
+  {
+	return this.y;
+  }
+
+  // mutators set the x and y coordinates
+  public void setX (double x)
+  {
+	this.x = x;
+  }
+
+  public void setY (double y)
+  {
+	this.y = y;
+  }
+
+  // distance to another point
+  public double distance (Point p)
+  {
+	return Math.sqrt ((this.x - p.x) * (this.x - p.x) + (this.y - p.y) * (this.y - p.y));
+  }
+
+  // string representation of a point, i.e. x and y coordinates
+  public String toString ()
+  {
+	String s = "(" + this.x + ", " + this.y + ")";
+	return s;
+  }
+
+  // test for equality of two points
+  public boolean equals (Point p)
+  {
+	double delta = 1.0e-16;
+	return (Math.abs (this.x - p.x) < delta) && (Math.abs (this.y - p.y) < delta);
+  }  
+}
+
+
+
+class Circle
+{
+  // list of attributes
+  private double radius;
+  private Point center;
+
+  // default constructor (radius = 1.0 and center at the origin)
+  public Circle ()
+  {
+	  this.radius = 1;
+	  this.center = new Point();
+  }
+
+  // non-default constructors
+  public Circle (double radius, double x, double y)
+  {
+	  this.radius = radius;
+	  this.center = new Point(x,y);
+  }
+
+  public Circle (double radius, Point p)
+  {
+	  this.radius = radius;
+	  this.center = p;
+  }
+
+  // accessors
+  public double getRadius ()
+  {
+	  return this.radius;
+  }
+
+  public Point getCenter ()
+  {
+	  return this.center;
+  }
+
+  // mutators
+  public void setRadius (double radius)
+  {
+	  this.radius = radius;
+  }
+
+  public void setCenter (double x, double y)
+  {
+	  this.center = new Point(x,y);
+  }
+
+  public void setCenter (Point p)
+  {
+	  this.center = p;
+  }
+
+  // calculate circumference
+  public double circumference ()
+  {
+	  return 2.0 * Math.PI * radius;
+  }
+
+  // calculate area
+  public double area ()
+  {
+	  return Math.PI * radius * radius;
+  }
+
+  // determine if Point p is strictly inside this Circle
+  public boolean isInside (Point p)
+  {
+	  return this.center.distance(p) <= radius;
+  }
+
+  // determine if Circle c is strictly inside this Circle
+  public boolean isInside (Circle c)
+  {
+	  return this.center.distance(c.center) + c.radius <= this.radius;
+  }
+
+  // determine if Rectangle r is strictly inside this Circle
+  public boolean isInside (Rectangle r)
+  {
+	  Point UR = new Point(r.getLR().getX(), r.getUL().getY());
+	  Point LL = new Point(r.getUL().getX(), r.getLR().getY());
+	  return this.isInside(r.getUL()) && this.isInside(r.getLR()) && this.isInside(UR) && this.isInside(LL);
+  }
+
+  // determine if Circle c intersects this Circle
+  public boolean doesIntersect (Circle c)
+  {
+	  return this.center.distance(c.center) <= c.radius + this.radius;
+  }
+
+  // determine if Rectangle r intersects this Circle
+  public boolean doesIntersect (Rectangle r)
+  {
+	  Point UR = new Point(r.getLR().getX(), r.getUL().getY());
+	  Point LL = new Point(r.getUL().getX(), r.getLR().getY());
+	  Point leftmost = new Point(this.center.getX() - this.radius, this.center.getY());
+	  Point rightmost = new Point(this.center.getX() + this.radius, this.center.getY());
+	  Point upmost = new Point(this.center.getX(), this.center.getY() + this.radius);
+	  Point downmost = new Point(this.center.getX(), this.center.getY() - this.radius);
+	  return this.isInside(r.getUL()) || this.isInside(r.getLR()) || this.isInside(UR) || this.isInside(LL)
+			  || r.isInside(leftmost) || r.isInside(rightmost) || r.isInside(upmost) || r.isInside(downmost);
+  }
+
+  // determine the Rectangle that circumscribes this Circle
+  // Rectangle is on the outside and the Circle is inside
+  // the sides of the Rectangle are tangents to the Circle
+  public Rectangle circumscribes ()
+  {
+	  Rectangle r = new Rectangle((this.center.getX() - this.radius), (this.center.getY() + this.radius), 
+			  (this.center.getX() + this.radius), (this.center.getY() - this.radius));
+	  return r;
+  }
+
+  // string representation of the Circle in the form:
+  // Radius: 1.2, Center: (3, 4)
+  public String toString ()
+  {
+	  String s = "Radius: " + this.radius + ", Center: (" + this.center.getX() + ", " + this.center.getY() + ")";
+	  return s;
+  }
+
+  // determine if two Circles have the same radius
+  public boolean equals (Circle c)
+  {
+	  double delta = 1.0e-16;
+	  return (Math.abs (this.radius - c.radius) < delta);  
+  }
+
+  // determine if two Circles have the same center
+  public boolean isConcentric (Circle c)
+  {
+	  return this.getCenter().equals(c.getCenter());
+  }
+}
+
+
+
+class Rectangle
+{
+  // list attributes
+  private Point UL; 	// upper left corner
+  private Point LR;		// lower right corner
+
+  // default constructor creates a rectangle having
+  // corners UL (0, 1) and LR (1, 0)
+  public Rectangle ()
+  {
+	  this.UL = new Point(0,1);
+	  this.LR = new Point(1,0);
+  }
+
+  // non-default constructors accept user defined points
+  // and creates a rectangle object if the points form a
+  // rectangle (x1 < x1 and y1 > y2) or 
+  // the default rectangle if they do not.
+  public Rectangle (Point ul, Point lr)
+  {
+	  if(ul.getX() < lr.getX() && ul.getY() > lr.getY())
+	  {
+		  this.UL = ul;
+		  this.LR = lr;
+	  }
+	  else
+	  {
+		  this.UL = new Point(0,1);
+		  this.LR = new Point(1,0);
+	  }
+  }
+
+  public Rectangle (double x1, double y1, double x2, double y2)
+  {
+	  if(x1 < x2 && y1 > y2)
+	  {
+		  this.UL = new Point(x1,y1);
+		  this.LR = new Point(x2,y2);
+	  }
+	  else
+	  {
+		  this.UL = new Point(0,1);
+		  this.LR = new Point(1,0);
+	  }
+  }
+
+  // accessors
+  public Point getUL ()
+  {
+	  return this.UL;
+  }
+  
+  public Point getLR ()
+  {
+	  return this.LR;
+  }
+
+  // get length - absolute value of the x coord difference
+  public double getLength ()
+  {
+	  return (this.LR.getX() - this.UL.getX());
+  }
+
+  // get width - absolute value of the y coord difference
+  public double getWidth ()
+  {
+	  return (this.UL.getY() - this.LR.getY());
+  }
+
+  // mutators reset the edge points only if the rectangle 
+  // shape is preserved (x1 < x2 and y1 > y2)
+  public void setUL (Point ul)
+  {
+	  if(ul.getX() < this.LR.getX() && ul.getY() > this.LR.getY())
+	  {
+		  this.UL = ul;
+	  }
+  }
+  
+  public void setLR (Point lr)
+  {
+	  if(this.UL.getX() < lr.getX() && this.UL.getY() > lr.getY())
+	  {
+		  this.LR = lr;
+	  }
+  }
+
+  public void setUL (double x1, double y1)
+  {
+	  if(x1 < this.LR.getX() && y1 > this.LR.getY())
+	  {
+		  this.UL = new Point(x1,y1);
+	  }  
+  }
+  
+  public void setLR (double x2, double y2)
+  {
+	  if(this.UL.getX() < x2 && this.UL.getY() > y2)
+	  {
+		  this.LR = new Point(x2,y2);
+	  }  
+  }
+  
+  public void setRectangle (double x1, double y1, double x2, double y2)
+  {
+	  if(x1 < x2 && y1 > y2)
+	  {
+		  this.UL = new Point(x1,y1);
+		  this.LR = new Point(x2,y2);
+	  }  
+  }
+
+  // calculate area of a rectangle
+  public double area ()
+  {
+	  return (this.getLength()) * (this.getWidth());
+  }
+
+  // calculate the perimeter of a rectangle
+  public double perimeter ()
+  {
+	  return ((this.getLength()) * 2) + ((this.getWidth()) * 2);
+  }
+
+  // determine if a point is strictly inside the rectangle
+  public boolean isInside (Point p)
+  {
+	  return p.getX() < this.LR.getX() && p.getX() > this.UL.getX() && p.getY() > this.LR.getY() && p.getY() < this.UL.getY();
+  }
+
+  // determine if the Circle c is strictly inside the rectangle
+  public boolean isInside (Circle c)
+  {
+	  return c.getCenter().getX() - c.getRadius() > this.UL.getX() && c.getCenter().getX() + c.getRadius() < this.LR.getX()
+			  && c.getCenter().getY() - c.getRadius() > this.LR.getY() && c.getCenter().getY() + c.getRadius() < this.UL.getY();
+  }
+
+  // determine if the Rectangle r is strictly inside this Rectangle
+  public boolean isInside (Rectangle r)
+  {
+	  return r.LR.getX() < this.LR.getX() && r.UL.getX() > this.UL.getX() && r.LR.getY() > this.LR.getY() && r.UL.getY() < this.UL.getY();
+  }
+
+  // determine if Rectangle r intersects with this Rectangle
+  public boolean doesIntersect (Rectangle r)
+  {
+	  return (!(this.UL.getX() > r.LR.getX() || r.UL.getX() > this.LR.getX()) && 
+			  !(this.UL.getY() < r.LR.getY() || r.UL.getY() < this.LR.getY())); 
+  }
+  
+  // determine the Circle that circumscribes this Rectangle
+  // Circle is outside and the Rectangle is inside
+  // four vertices of the Rectangle are on the circumference of the Circle
+  public Circle circumscribes ()
+  {
+	  Circle c = new Circle((UL.distance(LR) / 2), (this.getUL().getX() + (this.getLength() / 2)), (this.getLR().getY() + (this.getWidth() / 2)));
+	  return c;
+  }
+
+  // return a string representation of a rectangle of the form
+  // UL: (3, 4), LR: (7, 2)
+  public String toString ()
+  {
+	  return ("UL: (" + this.UL.getX() + ", " + this.UL.getY() + "), LR: (" + this.LR.getX() + ", " + this.LR.getY() + ")");
+  }
+
+  // determine if two rectangles are congruent, i.e. the
+  // length of one is equal to the length of the other
+  // width of one is equal to the width of the other
+  public boolean equals (Rectangle r)
+  {
+	  double delta = 1.0e-16;
+	  return (Math.abs (this.getWidth() - r.getWidth()) < delta) && (Math.abs (this.getLength() - r.getLength()) < delta);
+  }
+
+  // determine if a rectangle is a square
+  public boolean isSquare ()
+  {
+	  double delta = 1.0e-16;
+	  return Math.abs(this.getWidth() - this.getLength()) < delta;
+  }
+
+}
+
+
+
+
+public class Geometry
+{
+
+  public static void main (String[] args) throws IOException
+  {
+    // open file "geometry.txt" for reading
+	// Create file reader
+	File inFile = new File ("geometry.txt");    
+	Scanner sc = new Scanner (inFile);
+
+    // read the coordinates of the first Point pointP
+	String line = sc.nextLine ();
+    line = line.trim();
+    String[] data = {"Empty","Empty","Empty","Empty"};
+    data = line.split ("\\s+");
+    Point P = new Point(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
+    
+    // read the coordinates of the second Point pointQ
+    line = sc.nextLine ();
+    line = line.trim();
+    data = line.split ("\\s+");
+    Point Q = new Point(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
+    
+    // print distance between pointP and pointQ
+    System.out.println("Distance between pointP and pointQ: " + P.distance(Q));
+
+    // read the radius and coordinates of the first Circle circleA
+    line = sc.nextLine ();
+    line = line.trim();
+    data = line.split ("\\s+");
+    Circle circleA = new Circle(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+    
+    // read the radius and coordinates of the second Circle circleB
+    line = sc.nextLine ();
+    line = line.trim();
+    data = line.split ("\\s+");
+    Circle circleB = new Circle(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+
+    // print the circumference of circleA
+    System.out.println();
+    System.out.println("Circumference of circleA: " + circleA.circumference());
+ 
+    // print the area of circleB
+    System.out.println();
+    System.out.println("Area of circleB: " + circleB.area());
+
+    // print if pointP is inside circleA or not
+    System.out.println();
+    if (circleA.isInside(P) == true)
+    {
+    	System.out.println("pointP is inside circleA");
+    }
+    if (circleA.isInside(P) == false)
+    {
+    	System.out.println("pointP is not inside circleA");
+    }
+
+    // print if circleB is inside circleA or not
+    System.out.println();
+    if (circleA.isInside(circleB) == true)
+    {
+    	System.out.println("circleB is inside circleA");
+    }
+    if (circleA.isInside(circleB) == false)
+    {
+    	System.out.println("circleB is not inside circleA");
+    }
+
+    // print if circleA and circleB intersect or not
+    System.out.println();
+    if (circleA.doesIntersect(circleB) == true)
+    {
+    	System.out.println("circleA and circleB does intersect");
+    }
+    if (circleA.doesIntersect(circleB) == false)
+    {
+    	System.out.println("circleA and circleB does not intersect");
+    }
+
+    // print the Rectangle that circleB is circumscribed by
+    System.out.println();
+    System.out.println("Coordinates of rectangle that inscribes circleB: " + circleB.circumscribes());
+
+    // read the coordinates of the UL and LR corners of Rectangle rectG
+    line = sc.nextLine ();
+    line = line.trim();
+    data = line.split ("\\s+");
+    Rectangle rectG = new Rectangle(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+
+    // read the coordinates of the UL and LR corners of Rectangle rectH
+    line = sc.nextLine ();
+    line = line.trim();
+    data = line.split ("\\s+");
+    Rectangle rectH = new Rectangle(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Double.parseDouble(data[2]), Double.parseDouble(data[3]));
+
+    // print the length and width of rectG
+    System.out.println();
+    System.out.println("Length and width of rectG: " + rectG.getLength() + ", " + rectG.getWidth());
+
+    // print if the rectG and rectH have the same area but different perimeter or not
+    System.out.println();
+	double delta = 1.0e-16;
+    if ((Math.abs(rectG.area() - rectH.area()) < delta) && (Math.abs(rectG.perimeter() - rectH.perimeter()) > delta))
+    {
+        System.out.println("rectG and rectH do have the same area but different perimeter");
+    }
+    else
+    {
+    	System.out.println("rectG and rectH do not have the same area but different perimeter");
+    }
+
+    // print if rectH is a square or not
+    System.out.println();
+    if (rectH.isSquare() == true)
+    {
+    	System.out.println("rectH is a square");
+    }
+    else
+    {
+    	System.out.println("rectH is not a square");
+    }
+
+    // print the Circle that circumscribes rectH
+    System.out.println();
+    System.out.println("Coordinates of circle that circumscribes rectH: " + rectH.circumscribes());
+
+    // determine if pointP is inside rectG or not
+    System.out.println();
+    if (rectG.isInside(P) == true)
+    {
+    	System.out.println("pointP is inside rectG");
+    }
+    else
+    {
+    	System.out.println("pointP is not inside rectG");
+    }
+
+    // determine if circleB is inside rectH or not
+    System.out.println();
+    if (rectH.isInside(circleB) == true)
+    {
+    	System.out.println("circleB is inside rectH");
+    }
+    else
+    {
+    	System.out.println("circleB is not inside rectH");
+    }
+
+    // determine if rectH is inside rectG or not
+    System.out.println();
+    if (rectG.isInside(rectH) == true)
+    {
+    	System.out.println("rectH is inside rectG");
+    }
+    else
+    {
+    	System.out.println("rectH is not inside rectG");
+    }
+
+    // determine if rectG and rectH intersect or not
+    System.out.println();
+    if (rectH.doesIntersect(rectG) == true)
+    {
+    	System.out.println("rectG and rectH do intersect");
+    }
+    else
+    {
+    	System.out.println("rectG and rectH do not intersect");
+    }
+    
+    // close file "geometry.txt"
+    sc.close();
+  }
+   
+}
